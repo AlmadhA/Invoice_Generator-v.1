@@ -2,6 +2,7 @@
 <html lang="id">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,11 +12,11 @@
 
 <link rel="stylesheet" href="css/style.css">
 
-<!-- Icon -->
+
 <script src="https://unpkg.com/lucide@latest"></script>
 
-<!-- PDF Generator -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 
 </head>
 
@@ -27,51 +28,80 @@
 
 
 <!-- SIDEBAR -->
+
 <aside class="sidebar">
 
 
 <div class="brand">
 
+
 <img src="assets/logo/default-logo.png">
 
+
 <div>
+
 <h2>
 Invoice Studio
 </h2>
+
 
 <p>
 by Madha
 </p>
 
-</div>
 
 </div>
+
+
+</div>
+
+
 
 
 
 <nav>
 
 
-<button class="menu active">
+<button 
+class="menu active"
+data-page="invoicePage">
+
 <i data-lucide="file-text"></i>
+
 Invoice
+
 </button>
 
 
-<button class="menu">
+
+<button 
+class="menu"
+data-page="businessPage">
+
 <i data-lucide="building-2"></i>
+
 Business
+
 </button>
 
 
-<button class="menu">
+
+
+<button 
+class="menu"
+data-page="historyPage">
+
 <i data-lucide="history"></i>
+
 History
+
 </button>
 
 
 
 </nav>
+
+
 
 
 
@@ -88,7 +118,10 @@ Professional Invoice Generator
 </div>
 
 
+
 </aside>
+
+
 
 
 
@@ -99,7 +132,21 @@ Professional Invoice Generator
 <main class="main">
 
 
+
+
+
+<!-- =====================
+INVOICE PAGE
+===================== -->
+
+
+<section 
+id="invoicePage"
+class="page active-page">
+
+
 <header class="topbar">
+
 
 <div>
 
@@ -107,15 +154,19 @@ Professional Invoice Generator
 Create Invoice
 </h1>
 
+
 <p>
-Generate professional invoices for your business
+Generate professional invoices
 </p>
+
 
 </div>
 
 
 
-<button id="btnPDF" class="primary">
+<button
+id="btnPDF"
+class="primary">
 
 <i data-lucide="download"></i>
 
@@ -124,26 +175,32 @@ Export PDF
 </button>
 
 
+
 </header>
 
 
 
 
 
-<section class="workspace">
+
+
+<div class="workspace">
 
 
 
-<!-- FORM -->
+
 
 <div class="editor">
+
+
+
 
 
 <div class="card">
 
 
 <h3>
-Business Profile
+Business
 </h3>
 
 
@@ -162,8 +219,8 @@ Kidung Sore Wedding Organizer
 </select>
 
 
-
 </div>
+
 
 
 
@@ -172,20 +229,24 @@ Kidung Sore Wedding Organizer
 
 <div class="card">
 
+
 <h3>
 Customer
 </h3>
 
 
-<input id="customerName"
+<input
+id="customerName"
 placeholder="Nama Customer">
 
 
-<textarea id="customerAddress"
+<textarea
+id="customerAddress"
 placeholder="Alamat Customer"></textarea>
 
 
 </div>
+
 
 
 
@@ -201,32 +262,31 @@ Invoice Information
 </h3>
 
 
-<div class="grid">
+<input
+id="invoiceNumber"
+placeholder="Nomor Invoice (Manual)">
 
 
-<input id="invoiceNumber"
-placeholder="Invoice Number">
 
-
-<input id="invoiceDate"
+<input
+id="invoiceDate"
 type="date">
-
-
-</div>
 
 
 
 <select id="invoiceStatus">
 
-<option>
+<option value="UNPAID">
 UNPAID
 </option>
 
-<option>
+
+<option value="PAID">
 PAID
 </option>
 
-<option>
+
+<option value="PENDING">
 PENDING
 </option>
 
@@ -234,7 +294,10 @@ PENDING
 </select>
 
 
+
 </div>
+
+
 
 
 
@@ -247,7 +310,6 @@ PENDING
 <h3>
 Items
 </h3>
-
 
 
 <table id="itemTable">
@@ -281,17 +343,18 @@ Harga
 </thead>
 
 
-<tbody>
 
-
-</tbody>
+<tbody></tbody>
 
 
 </table>
 
 
 
-<button id="addItem"
+
+<button
+type="button"
+id="addItem"
 class="secondary">
 
 + Add Item
@@ -313,23 +376,28 @@ class="secondary">
 
 
 <h3>
-Payment
+Payment & Notes
 </h3>
 
 
-<textarea id="paymentInfo"
-placeholder="Informasi pembayaran"></textarea>
+<textarea
+id="paymentInfo"
+placeholder="Informasi pembayaran">
+</textarea>
 
 
 
-<textarea id="notes"
-placeholder="Catatan tambahan"></textarea>
+<textarea
+id="notes"
+placeholder="Catatan">
+</textarea>
 
 
 </div>
 
 
 
+
 </div>
 
 
@@ -337,22 +405,32 @@ placeholder="Catatan tambahan"></textarea>
 
 
 
-<!-- PREVIEW -->
 
 
 <div class="preview-area">
 
 
 <div class="preview-title">
+
 Live Preview
+
 </div>
 
 
-<div id="invoicePreview"
+
+<div 
+id="invoicePreview"
 class="invoice-paper">
 
+</div>
+
+
 
 </div>
+
+
+
+
 
 
 
@@ -364,21 +442,101 @@ class="invoice-paper">
 
 
 
+
+
+
+
+<!-- =====================
+BUSINESS PAGE
+===================== -->
+
+
+<section
+id="businessPage"
+class="page">
+
+
+<div class="card">
+
+
+<h1>
+Business Profile
+</h1>
+
+
+<div id="businessList">
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =====================
+HISTORY PAGE
+===================== -->
+
+
+<section
+id="historyPage"
+class="page">
+
+
+<div class="card">
+
+
+<h1>
+Invoice History
+</h1>
+
+
+<div id="historyList">
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
 </main>
+
 
 
 </div>
 
 
 
+
+
 <script src="js/storage.js"></script>
+
 <script src="js/invoice.js"></script>
+
 <script src="js/app.js"></script>
 
 
+
 <script>
+
 lucide.createIcons();
+
 </script>
+
 
 
 </body>
