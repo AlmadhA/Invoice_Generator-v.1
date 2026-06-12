@@ -1,12 +1,18 @@
 /* =========================================
    Invoice Studio by Madha
-   Storage Management
+   Storage System
 ========================================= */
 
 
-// =========================================
-// BUSINESS DATABASE
-// =========================================
+/*
+    Business Database
+
+    Logo sengaja menggunakan path:
+    assets/logo/
+
+    Jadi Anda tinggal mengganti file logo
+    tanpa mengubah kode.
+*/
 
 
 const BUSINESS_DATA = {
@@ -14,45 +20,31 @@ const BUSINESS_DATA = {
 
     kidung:{
 
-
         id:"kidung",
 
         name:
         "Kidung Sore Wedding Organizer",
 
-
-        shortName:
-        "Kidung Sore",
-
-
         logo:
         "assets/logo/kidung-sore.png",
-
-
-        theme:
-        "elegant",
-
 
         address:
         "Wedding Organizer & Event Service",
 
-
         phone:
         "",
-
 
         email:
         "",
 
-
         payment:
-        "Transfer Bank\nBCA / Mandiri / BNI"
+        "Transfer Bank\nBCA / Mandiri / BNI",
 
+        theme:
+        "gold"
 
 
     },
-
-
 
 
 
@@ -61,44 +53,29 @@ const BUSINESS_DATA = {
 
         id:"ndata",
 
-
         name:
         "#NgeDataBarengMadha",
-
-
-        shortName:
-        "NData Madha",
-
 
         logo:
         "assets/logo/ndata-madha.png",
 
-
-        theme:
-        "modern",
-
-
         address:
         "Excel Training & Data Solution",
-
 
         phone:
         "",
 
-
         email:
         "",
 
-
         payment:
-        "Payment via Transfer"
+        "Payment via Transfer",
 
+        theme:
+        "blue"
 
 
     }
-
-
-
 
 
 };
@@ -107,62 +84,46 @@ const BUSINESS_DATA = {
 
 
 
+
 // =========================================
-// GET BUSINESS
+// STORAGE KEY
+// =========================================
+
+
+const STORAGE = {
+
+
+    HISTORY:
+    "invoice_history",
+
+
+    SETTINGS:
+    "invoice_settings"
+
+
+};
+
+
+
+
+
+
+
+// =========================================
+// BUSINESS
 // =========================================
 
 
 function getBusiness(id){
 
 
-    return BUSINESS_DATA[id]
-    ||
-    BUSINESS_DATA.kidung;
+    return (
 
+        BUSINESS_DATA[id]
 
-}
+        ||
 
-
-
-
-
-
-// =========================================
-// LOCAL STORAGE KEY
-// =========================================
-
-
-const STORAGE_KEY = {
-
-
-    HISTORY:
-    "invoice_history_madha",
-
-
-    SETTINGS:
-    "invoice_settings_madha"
-
-
-};
-
-
-
-
-
-
-// =========================================
-// SAVE DATA
-// =========================================
-
-
-function saveStorage(key,data){
-
-
-    localStorage.setItem(
-
-        key,
-
-        JSON.stringify(data)
+        BUSINESS_DATA.kidung
 
     );
 
@@ -173,12 +134,47 @@ function saveStorage(key,data){
 
 
 
+
+
+function getAllBusiness(){
+
+
+    return BUSINESS_DATA;
+
+
+}
+
+
+
+
+
+
+
+
 // =========================================
-// GET DATA
+// LOCAL STORAGE
 // =========================================
 
 
-function getStorage(key){
+function saveData(key,value){
+
+
+    localStorage.setItem(
+
+        key,
+
+        JSON.stringify(value)
+
+    );
+
+
+}
+
+
+
+
+
+function getData(key){
 
 
     const data =
@@ -186,9 +182,11 @@ function getStorage(key){
 
 
 
-    if(!data)
+    if(!data){
+
         return null;
 
+    }
 
 
     return JSON.parse(data);
@@ -201,35 +199,33 @@ function getStorage(key){
 
 
 
-
 // =========================================
-// INVOICE HISTORY
+// HISTORY
 // =========================================
 
 
-
-function saveInvoiceHistory(invoice){
+function saveHistory(invoice){
 
 
 
     let history =
-    getStorage(
-        STORAGE_KEY.HISTORY
+
+    getData(
+        STORAGE.HISTORY
     )
+
     ||
+
     [];
+
 
 
 
     history.unshift({
 
+
         id:
         Date.now(),
-
-
-        date:
-        new Date()
-        .toISOString(),
 
 
         invoiceNumber:
@@ -244,6 +240,13 @@ function saveInvoiceHistory(invoice){
         invoice.total,
 
 
+        created:
+        new Date()
+        .toLocaleString(
+            "id-ID"
+        ),
+
+
         data:
         invoice
 
@@ -252,9 +255,10 @@ function saveInvoiceHistory(invoice){
 
 
 
-    saveStorage(
 
-        STORAGE_KEY.HISTORY,
+    saveData(
+
+        STORAGE.HISTORY,
 
         history
 
@@ -269,13 +273,13 @@ function saveInvoiceHistory(invoice){
 
 
 
-function getInvoiceHistory(){
+function getHistory(){
 
 
     return (
 
-        getStorage(
-            STORAGE_KEY.HISTORY
+        getData(
+            STORAGE.HISTORY
         )
 
         ||
@@ -291,18 +295,19 @@ function getInvoiceHistory(){
 
 
 
-function clearInvoiceHistory(){
+
+
+function clearHistory(){
 
 
     localStorage.removeItem(
 
-        STORAGE_KEY.HISTORY
+        STORAGE.HISTORY
 
     );
 
 
 }
-
 
 
 
@@ -314,14 +319,14 @@ function clearInvoiceHistory(){
 // =========================================
 
 
-function saveSettings(settings){
+function saveSettings(data){
 
 
-    saveStorage(
+    saveData(
 
-        STORAGE_KEY.SETTINGS,
+        STORAGE.SETTINGS,
 
-        settings
+        data
 
     );
 
@@ -330,17 +335,13 @@ function saveSettings(settings){
 
 
 
-
-
 function getSettings(){
 
 
     return (
 
-        getStorage(
-
-            STORAGE_KEY.SETTINGS
-
+        getData(
+            STORAGE.SETTINGS
         )
 
         ||
@@ -358,23 +359,25 @@ function getSettings(){
 
 
 // =========================================
-// EXPORT
+// GLOBAL ACCESS
 // =========================================
 
 
-window.StorageManager = {
+window.StorageApp = {
 
-
-    getBusiness,
 
     BUSINESS_DATA,
 
+    getBusiness,
 
-    saveInvoiceHistory,
+    getAllBusiness,
 
-    getInvoiceHistory,
 
-    clearInvoiceHistory,
+    saveHistory,
+
+    getHistory,
+
+    clearHistory,
 
 
     saveSettings,
