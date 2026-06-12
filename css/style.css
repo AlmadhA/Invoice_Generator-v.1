@@ -1,21 +1,23 @@
 /* =========================================
    Invoice Studio by Madha
-   Main Stylesheet
+   Modern SaaS UI
 ========================================= */
 
 
-:root {
+:root{
 
     --primary:#2563eb;
-    --primary-dark:#1d4ed8;
+    --primary-hover:#1d4ed8;
 
-    --bg:#f8fafc;
+    --background:#f8fafc;
     --surface:#ffffff;
 
     --border:#e2e8f0;
 
     --text:#0f172a;
     --muted:#64748b;
+
+    --danger:#ef4444;
 
     --radius:16px;
 
@@ -27,22 +29,27 @@
 
 
 
-
 *{
+
     box-sizing:border-box;
+
     margin:0;
+
     padding:0;
+
     font-family:
     Inter,
     "Segoe UI",
+    Arial,
     sans-serif;
+
 }
 
 
 
 body{
 
-    background:var(--bg);
+    background:var(--background);
 
     color:var(--text);
 
@@ -52,7 +59,7 @@ body{
 
 
 /* =========================================
-   APP LAYOUT
+   APP
 ========================================= */
 
 
@@ -67,6 +74,7 @@ body{
 
 
 
+
 /* =========================================
    SIDEBAR
 ========================================= */
@@ -74,19 +82,20 @@ body{
 
 .sidebar{
 
-    width:270px;
+    width:260px;
 
     background:white;
 
     border-right:1px solid var(--border);
 
-    padding:25px 20px;
+    padding:24px;
 
     display:flex;
 
     flex-direction:column;
 
 }
+
 
 
 
@@ -111,9 +120,9 @@ body{
 
     height:55px;
 
-    object-fit:contain;
+    border-radius:14px;
 
-    border-radius:12px;
+    object-fit:contain;
 
 }
 
@@ -131,11 +140,12 @@ body{
 
 .brand p{
 
-    font-size:14px;
+    font-size:13px;
 
     color:var(--muted);
 
 }
+
 
 
 
@@ -156,6 +166,8 @@ nav{
 
 .menu{
 
+    width:100%;
+
     border:none;
 
     background:none;
@@ -172,13 +184,14 @@ nav{
 
     cursor:pointer;
 
-    font-size:15px;
-
     color:var(--muted);
+
+    font-size:15px;
 
     transition:.2s;
 
 }
+
 
 
 
@@ -202,15 +215,15 @@ nav{
 
 
 
+
+
 .sidebar-footer{
 
     margin-top:auto;
 
-    padding-top:30px;
+    color:var(--muted);
 
     font-size:13px;
-
-    color:var(--muted);
 
 }
 
@@ -222,6 +235,7 @@ nav{
     margin-top:8px;
 
 }
+
 
 
 
@@ -242,6 +256,31 @@ nav{
 
 
 
+.page{
+
+    display:none;
+
+}
+
+
+
+.active-page{
+
+    display:block;
+
+}
+
+
+
+
+
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+
 .topbar{
 
     display:flex;
@@ -260,7 +299,7 @@ nav{
 
     font-size:32px;
 
-    margin-bottom:5px;
+    margin-bottom:6px;
 
 }
 
@@ -275,6 +314,7 @@ nav{
 
 
 
+
 button{
 
     font-family:inherit;
@@ -284,25 +324,26 @@ button{
 
 
 
+
 .primary{
+
+    border:none;
 
     background:var(--primary);
 
     color:white;
 
-    border:none;
-
     padding:12px 20px;
 
     border-radius:12px;
+
+    cursor:pointer;
 
     display:flex;
 
     align-items:center;
 
     gap:10px;
-
-    cursor:pointer;
 
     transition:.2s;
 
@@ -312,9 +353,12 @@ button{
 
 .primary:hover{
 
-    background:var(--primary-dark);
+    background:var(--primary-hover);
 
 }
+
+
+
 
 
 
@@ -323,13 +367,13 @@ button{
 
     margin-top:15px;
 
-    padding:10px 16px;
-
-    border-radius:10px;
+    background:white;
 
     border:1px solid var(--border);
 
-    background:white;
+    padding:11px 16px;
+
+    border-radius:10px;
 
     cursor:pointer;
 
@@ -347,6 +391,8 @@ button{
 
 
 
+
+
 /* =========================================
    WORKSPACE
 ========================================= */
@@ -357,14 +403,19 @@ button{
     display:grid;
 
     grid-template-columns:
-    minmax(350px,450px)
+
+    430px
+
     1fr;
+
 
     gap:25px;
 
     align-items:start;
 
 }
+
+
 
 
 
@@ -382,13 +433,18 @@ button{
 
 
 
+
+
+/* =========================================
+   CARD
+========================================= */
+
+
 .card{
 
     background:white;
 
-    border:
-
-    1px solid var(--border);
+    border:1px solid var(--border);
 
     border-radius:var(--radius);
 
@@ -400,17 +456,30 @@ button{
 
 
 
-
 .card h3{
 
-    font-size:17px;
-
     margin-bottom:18px;
+
+    font-size:17px;
 
 }
 
 
 
+.card h1{
+
+    margin-bottom:20px;
+
+}
+
+
+
+
+
+
+/* =========================================
+   FORM
+========================================= */
 
 
 input,
@@ -420,17 +489,15 @@ select{
 
     width:100%;
 
-    border:
-
-    1px solid var(--border);
+    padding:12px 14px;
 
     border-radius:10px;
 
-    padding:12px 14px;
-
-    font-size:14px;
+    border:1px solid var(--border);
 
     outline:none;
+
+    font-size:14px;
 
     margin-bottom:12px;
 
@@ -440,11 +507,12 @@ select{
 
 
 
+
 textarea{
 
-    resize:vertical;
-
     min-height:90px;
+
+    resize:vertical;
 
 }
 
@@ -460,17 +528,6 @@ select:focus{
 
 
 
-
-
-.grid{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:12px;
-
-}
 
 
 
@@ -506,9 +563,46 @@ th{
 
 td{
 
-    padding:8px 5px;
+    padding:5px;
 
 }
+
+
+
+
+
+td input{
+
+    margin:0;
+
+}
+
+
+
+
+
+
+.delete-item{
+
+
+    border:none;
+
+    background:#fee2e2;
+
+    color:var(--danger);
+
+    width:30px;
+
+    height:30px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+}
+
 
 
 
@@ -530,14 +624,13 @@ td{
 
 .preview-title{
 
-    font-size:14px;
-
     color:var(--muted);
+
+    font-size:14px;
 
     margin-bottom:12px;
 
 }
-
 
 
 
@@ -546,7 +639,7 @@ td{
 
     background:white;
 
-    min-height:700px;
+    min-height:720px;
 
     border-radius:18px;
 
@@ -564,75 +657,7 @@ td{
 
 
 /* =========================================
-   RESPONSIVE
-========================================= */
-
-
-@media(max-width:1100px){
-
-
-.workspace{
-
-    grid-template-columns:1fr;
-
-}
-
-
-.preview-area{
-
-    position:relative;
-
-}
-
-
-}
-
-
-
-
-@media(max-width:768px){
-
-
-.sidebar{
-
-    display:none;
-
-}
-
-
-
-.main{
-
-    padding:15px;
-
-}
-
-
-
-.topbar{
-
-    flex-direction:column;
-
-    align-items:flex-start;
-
-    gap:20px;
-
-}
-
-
-
-.grid{
-
-    grid-template-columns:1fr;
-
-}
-
-
-
-}
-
-/* =========================================
-   Invoice Preview Style
+   INVOICE DESIGN
 ========================================= */
 
 
@@ -684,6 +709,8 @@ td{
 
 
 
+
+
 .invoice-table{
 
     width:100%;
@@ -704,14 +731,15 @@ td{
 
 
 
-.invoice-table td,
-.invoice-table th{
+.invoice-table th,
+.invoice-table td{
 
     padding:12px;
 
-    border-bottom:1px solid #e2e8f0;
+    border-bottom:1px solid var(--border);
 
 }
+
 
 
 
@@ -719,21 +747,36 @@ td{
 
     text-align:right;
 
-    margin-top:35px;
+    margin-top:40px;
 
 }
+
+
+
+.invoice-total h2{
+
+    font-size:28px;
+
+    color:var(--primary);
+
+}
+
+
 
 
 
 .invoice-footer{
 
-    margin-top:40px;
+    margin-top:50px;
 
     padding-top:20px;
 
-    border-top:1px solid #e2e8f0;
+    border-top:1px solid var(--border);
 
 }
+
+
+
 
 
 .invoice-footer strong{
@@ -741,5 +784,111 @@ td{
     display:block;
 
     margin-top:15px;
+
+}
+
+
+
+
+
+/* =========================================
+   HISTORY
+========================================= */
+
+
+.history-item{
+
+    border-bottom:1px solid var(--border);
+
+    padding:15px 0;
+
+}
+
+
+
+.history-item:last-child{
+
+    border:none;
+
+}
+
+
+
+
+
+.empty-state{
+
+    color:var(--muted);
+
+    text-align:center;
+
+    padding:30px;
+
+}
+
+
+
+
+
+
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+
+@media(max-width:1100px){
+
+
+.workspace{
+
+    grid-template-columns:1fr;
+
+}
+
+
+
+.preview-area{
+
+    position:relative;
+
+}
+
+
+}
+
+
+
+
+@media(max-width:768px){
+
+
+.sidebar{
+
+    display:none;
+
+}
+
+
+
+.main{
+
+    padding:15px;
+
+}
+
+
+
+.topbar{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:20px;
+
+}
+
 
 }
