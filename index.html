@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Invoice Studio by Madha</title>
+
+<link rel="icon" href="assets/logo/default-logo.png">
+
+<link rel="stylesheet" href="css/style.css">
+
+<!-- Icon -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<!-- PDF Generator -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+
+<div class="brand">
+
+<img src="assets/logo/default-logo.png">
+
+<div>
+<h2>
+Invoice Studio
+</h2>
+
+<p>
+by Madha
+</p>
+
+</div>
+
+</div>
+
+
+
+<nav>
+
+
+<button class="menu active">
+<i data-lucide="file-text"></i>
+Invoice
+</button>
+
+
+<button class="menu">
+<i data-lucide="building-2"></i>
+Business
+</button>
+
+
+<button class="menu">
+<i data-lucide="history"></i>
+History
+</button>
+
+
+
+</nav>
+
+
+
+<div class="sidebar-footer">
+
+<p>
+Professional Invoice Generator
+</p>
+
+<span>
+© Madha Studio
+</span>
+
+</div>
+
+
+</aside>
+
+
+
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+<header class="topbar">
+
+<div>
+
+<h1>
+Create Invoice
+</h1>
+
+<p>
+Generate professional invoices for your business
+</p>
+
+</div>
+
+
+
+<button id="btnPDF" class="primary">
+
+<i data-lucide="download"></i>
+
+Export PDF
+
+</button>
+
+
+</header>
+
+
+
+
+
+<section class="workspace">
+
+
+
+<!-- FORM -->
+
+<div class="editor">
+
+
+<div class="card">
+
+
+<h3>
+Business Profile
+</h3>
+
+
+<select id="businessSelect">
+
+<option value="kidung">
+Kidung Sore Wedding Organizer
+</option>
+
+
+<option value="ndata">
+#NgeDataBarengMadha
+</option>
+
+
+</select>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+<h3>
+Customer
+</h3>
+
+
+<input id="customerName"
+placeholder="Nama Customer">
+
+
+<textarea id="customerAddress"
+placeholder="Alamat Customer"></textarea>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h3>
+Invoice Information
+</h3>
+
+
+<div class="grid">
+
+
+<input id="invoiceNumber"
+placeholder="Invoice Number">
+
+
+<input id="invoiceDate"
+type="date">
+
+
+</div>
+
+
+
+<select id="invoiceStatus">
+
+<option>
+UNPAID
+</option>
+
+<option>
+PAID
+</option>
+
+<option>
+PENDING
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<h3>
+Items
+</h3>
+
+
+
+<table id="itemTable">
+
+
+<thead>
+
+<tr>
+
+<th>
+Item
+</th>
+
+
+<th>
+Qty
+</th>
+
+
+<th>
+Harga
+</th>
+
+
+<th>
+</th>
+
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+
+</tbody>
+
+
+</table>
+
+
+
+<button id="addItem"
+class="secondary">
+
++ Add Item
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h3>
+Payment
+</h3>
+
+
+<textarea id="paymentInfo"
+placeholder="Informasi pembayaran"></textarea>
+
+
+
+<textarea id="notes"
+placeholder="Catatan tambahan"></textarea>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- PREVIEW -->
+
+
+<div class="preview-area">
+
+
+<div class="preview-title">
+Live Preview
+</div>
+
+
+<div id="invoicePreview"
+class="invoice-paper">
+
+
+</div>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+</main>
+
+
+</div>
+
+
+
+<script src="js/storage.js"></script>
+<script src="js/invoice.js"></script>
+<script src="js/app.js"></script>
+
+
+<script>
+lucide.createIcons();
+</script>
+
+
+</body>
+
+</html>
