@@ -1,53 +1,33 @@
 /* =========================================
    Invoice Studio by Madha
-   Storage Management
+   Invoice Engine
 ========================================= */
 
 
-// =========================================
-// BUSINESS DATABASE
-// =========================================
+const InvoiceApp = {
 
 
-const BUSINESS_DATA = {
+    items: [],
 
 
-    kidung:{
+
+    // ===============================
+    // FORMAT RUPIAH
+    // ===============================
 
 
-        id:"kidung",
-
-        name:
-        "Kidung Sore Wedding Organizer",
+    formatRupiah(value){
 
 
-        shortName:
-        "Kidung Sore",
+        return new Intl.NumberFormat(
+            "id-ID",
+            {
+                style:"currency",
+                currency:"IDR",
+                maximumFractionDigits:0
+            }
 
-
-        logo:
-        "assets/logo/kidung-sore.png",
-
-
-        theme:
-        "elegant",
-
-
-        address:
-        "Wedding Organizer & Event Service",
-
-
-        phone:
-        "",
-
-
-        email:
-        "",
-
-
-        payment:
-        "Transfer Bank\nBCA / Mandiri / BNI"
-
+        ).format(value || 0);
 
 
     },
@@ -56,42 +36,694 @@ const BUSINESS_DATA = {
 
 
 
-    ndata:{
+    // ===============================
+    // ADD ITEM
+    // ===============================
 
 
-        id:"ndata",
+    addItem(){
 
 
-        name:
-        "#NgeDataBarengMadha",
+        this.items.push({
+
+            name:"",
+
+            qty:1,
+
+            price:0
+
+        });
 
 
-        shortName:
-        "NData Madha",
+
+        this.renderItems();
+
+        this.renderPreview();
 
 
-        logo:
-        "assets/logo/ndata-madha.png",
+    },
 
 
-        theme:
-        "modern",
 
 
-        address:
-        "Excel Training & Data Solution",
 
 
-        phone:
-        "",
+    // ===============================
+    // REMOVE ITEM
+    // ===============================
 
 
-        email:
-        "",
+    removeItem(index){
 
 
-        payment:
-        "Payment via Transfer"
+        this.items.splice(
+
+            index,
+
+            1
+
+        );
+
+
+        this.renderItems();
+
+        this.renderPreview();
+
+
+    },
+
+
+
+
+
+
+    // ===============================
+    // RENDER TABLE ITEM
+    // ===============================
+
+
+    renderItems(){
+
+
+        const tbody =
+        document.querySelector(
+            "#itemTable tbody"
+        );
+
+
+
+        if(!tbody)
+            return;
+
+
+
+        tbody.innerHTML="";
+
+
+
+        this.items.forEach(
+            (item,index)=>{
+
+
+            const tr =
+            document.createElement(
+                "tr"
+            );
+
+
+
+            tr.innerHTML=`
+
+            <td>
+
+            <input
+            class="item-name"
+            data-index="${index}"
+            value="${item.name}"
+            placeholder="Nama item">
+
+
+            </td>
+
+
+
+            <td>
+
+            <input
+            type="number"
+            min="1"
+            class="item-qty"
+            data-index="${index}"
+            value="${item.qty}">
+
+
+            </td>
+
+
+
+            <td>
+
+            <input
+            type="number"
+            class="item-price"
+            data-index="${index}"
+            value="${item.price}">
+
+
+            </td>
+
+
+
+            <td>
+
+
+            <button
+            class="delete-item"
+            data-index="${index}">
+            ×
+            </button>
+
+
+            </td>
+
+
+            `;
+
+
+
+            tbody.appendChild(tr);
+
+
+        });
+
+
+    },
+
+
+
+
+
+
+
+    // ===============================
+    // GET DATA
+    // ===============================
+
+
+    getData(){
+
+
+        const business =
+
+        StorageApp.getBusiness(
+
+            document
+            .getElementById(
+                "businessSelect"
+            )
+            .value
+
+        );
+
+
+
+        return {
+
+
+            business,
+
+
+            invoiceNumber:
+
+            document
+            .getElementById(
+                "invoiceNumber"
+            )
+            .value,
+
+
+
+            date:
+
+            document
+            .getElementById(
+                "invoiceDate"
+            )
+            .value,
+
+
+
+            status:
+
+            document
+            .getElementById(
+                "invoiceStatus"
+            )
+            .value,
+
+
+
+            customerName:
+
+            document
+            .getElementById(
+                "customerName"
+            )
+            .value,
+
+
+
+            customerAddress:
+
+            document
+            .getElementById(
+                "customerAddress"
+            )
+            .value,
+
+
+
+            payment:
+
+            document
+            .getElementById(
+                "paymentInfo"
+            )
+            .value,
+
+
+
+            notes:
+
+            document
+            .getElementById(
+                "notes"
+            )
+            .value,
+
+
+
+            items:this.items
+
+
+        };
+
+
+    },
+
+
+
+
+
+
+
+    // ===============================
+    // CALCULATION
+    // ===============================
+
+
+    calculate(){
+
+
+        let total=0;
+
+
+
+        this.items.forEach(item=>{
+
+
+            total +=
+
+            Number(item.qty)
+
+            *
+
+            Number(item.price);
+
+
+
+        });
+
+
+
+        return total;
+
+
+    },
+
+
+
+
+
+
+
+    // ===============================
+    // LIVE PREVIEW
+    // ===============================
+
+
+    renderPreview(){
+
+
+
+        const preview =
+
+        document.getElementById(
+            "invoicePreview"
+        );
+
+
+
+        if(!preview)
+            return;
+
+
+
+        const data =
+        this.getData();
+
+
+
+        const total =
+        this.calculate();
+
+
+
+
+        preview.innerHTML=`
+
+
+        <div class="invoice-header">
+
+
+            <img
+
+            src="${data.business.logo}"
+
+            class="invoice-logo"
+
+            onerror="this.src='assets/logo/default-logo.png'">
+
+
+            <div>
+
+            <h2>
+            ${data.business.name}
+            </h2>
+
+
+            <p>
+            ${data.business.address}
+            </p>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <hr>
+
+
+
+        <div class="invoice-meta">
+
+
+            <div>
+
+            <strong>
+            Customer
+            </strong>
+
+
+            <br>
+
+            ${data.customerName || "-"}
+
+
+            <br>
+
+
+            ${data.customerAddress || ""}
+
+
+            </div>
+
+
+
+
+
+
+            <div>
+
+            <strong>
+            Invoice
+            </strong>
+
+
+            <br>
+
+
+            ${data.invoiceNumber || "-"}
+
+
+            <br>
+
+
+            ${data.date || "-"}
+
+
+            <br>
+
+
+            ${data.status}
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <table class="invoice-table">
+
+
+        <thead>
+
+        <tr>
+
+        <th>
+        Item
+        </th>
+
+
+        <th>
+        Qty
+        </th>
+
+
+        <th>
+        Total
+        </th>
+
+
+        </tr>
+
+
+        </thead>
+
+
+
+        <tbody>
+
+
+        ${
+            data.items.map(item=>`
+
+
+            <tr>
+
+
+            <td>
+            ${item.name || "-"}
+            </td>
+
+
+            <td>
+            ${item.qty}
+            </td>
+
+
+            <td>
+            ${
+                this.formatRupiah(
+                    item.qty *
+                    item.price
+                )
+            }
+            </td>
+
+
+            </tr>
+
+
+            `).join("")
+        }
+
+
+        </tbody>
+
+
+        </table>
+
+
+
+
+
+        <div class="invoice-total">
+
+
+        <p>
+        Grand Total
+        </p>
+
+
+        <h2>
+
+        ${this.formatRupiah(total)}
+
+        </h2>
+
+
+        </div>
+
+
+
+
+
+
+        <div class="invoice-footer">
+
+
+        <strong>
+        Payment
+        </strong>
+
+
+        <p>
+        ${data.payment || "-"}
+        </p>
+
+
+
+
+
+        <strong>
+        Notes
+        </strong>
+
+
+        <p>
+        ${data.notes || "-"}
+        </p>
+
+
+
+        </div>
+
+
+
+        `;
+
+
+    },
+
+
+
+
+
+
+
+    // ===============================
+    // EXPORT PDF
+    // ===============================
+
+
+    exportPDF(){
+
+
+
+        const data =
+        this.getData();
+
+
+
+        if(!data.invoiceNumber){
+
+
+            alert(
+                "Nomor invoice belum diisi"
+            );
+
+
+            return;
+
+
+        }
+
+
+
+
+
+        const element =
+
+        document.getElementById(
+            "invoicePreview"
+        );
+
+
+
+
+
+        html2pdf()
+
+        .from(element)
+
+        .set({
+
+            margin:10,
+
+
+            filename:
+            `Invoice-${data.invoiceNumber}.pdf`,
+
+
+
+            html2canvas:{
+
+                scale:2
+
+            },
+
+
+
+            jsPDF:{
+
+                format:"a4",
+
+                orientation:"portrait"
+
+            }
+
+
+        })
+
+        .save();
+
+
+
+
+
+        StorageApp.saveHistory({
+
+            ...data,
+
+
+            total:
+            this.calculate()
+
+
+        });
 
 
 
@@ -99,50 +731,6 @@ const BUSINESS_DATA = {
 
 
 
-
-
-};
-
-
-
-
-
-// =========================================
-// GET BUSINESS
-// =========================================
-
-
-function getBusiness(id){
-
-
-    return BUSINESS_DATA[id]
-    ||
-    BUSINESS_DATA.kidung;
-
-
-}
-
-
-
-
-
-
-// =========================================
-// LOCAL STORAGE KEY
-// =========================================
-
-
-const STORAGE_KEY = {
-
-
-    HISTORY:
-    "invoice_history_madha",
-
-
-    SETTINGS:
-    "invoice_settings_madha"
-
-
 };
 
 
@@ -150,236 +738,4 @@ const STORAGE_KEY = {
 
 
 
-// =========================================
-// SAVE DATA
-// =========================================
-
-
-function saveStorage(key,data){
-
-
-    localStorage.setItem(
-
-        key,
-
-        JSON.stringify(data)
-
-    );
-
-
-}
-
-
-
-
-
-// =========================================
-// GET DATA
-// =========================================
-
-
-function getStorage(key){
-
-
-    const data =
-    localStorage.getItem(key);
-
-
-
-    if(!data)
-        return null;
-
-
-
-    return JSON.parse(data);
-
-
-}
-
-
-
-
-
-
-
-// =========================================
-// INVOICE HISTORY
-// =========================================
-
-
-
-function saveInvoiceHistory(invoice){
-
-
-
-    let history =
-    getStorage(
-        STORAGE_KEY.HISTORY
-    )
-    ||
-    [];
-
-
-
-    history.unshift({
-
-        id:
-        Date.now(),
-
-
-        date:
-        new Date()
-        .toISOString(),
-
-
-        invoiceNumber:
-        invoice.invoiceNumber,
-
-
-        customer:
-        invoice.customerName,
-
-
-        total:
-        invoice.total,
-
-
-        data:
-        invoice
-
-
-    });
-
-
-
-    saveStorage(
-
-        STORAGE_KEY.HISTORY,
-
-        history
-
-    );
-
-
-}
-
-
-
-
-
-
-
-function getInvoiceHistory(){
-
-
-    return (
-
-        getStorage(
-            STORAGE_KEY.HISTORY
-        )
-
-        ||
-
-        []
-
-    );
-
-
-}
-
-
-
-
-
-function clearInvoiceHistory(){
-
-
-    localStorage.removeItem(
-
-        STORAGE_KEY.HISTORY
-
-    );
-
-
-}
-
-
-
-
-
-
-
-// =========================================
-// SETTINGS
-// =========================================
-
-
-function saveSettings(settings){
-
-
-    saveStorage(
-
-        STORAGE_KEY.SETTINGS,
-
-        settings
-
-    );
-
-
-}
-
-
-
-
-
-function getSettings(){
-
-
-    return (
-
-        getStorage(
-
-            STORAGE_KEY.SETTINGS
-
-        )
-
-        ||
-
-        {}
-
-    );
-
-
-}
-
-
-
-
-
-
-// =========================================
-// EXPORT
-// =========================================
-
-
-window.StorageManager = {
-
-
-    getBusiness,
-
-    BUSINESS_DATA,
-
-
-    saveInvoiceHistory,
-
-    getInvoiceHistory,
-
-    clearInvoiceHistory,
-
-
-    saveSettings,
-
-    getSettings
-
-
-};
+window.InvoiceApp = InvoiceApp;
